@@ -129,7 +129,7 @@
                             </li>
 
                             <li>
-                                <a href="#">
+                                <a href="/discount">
                                     <span style="font-weight: bold;">Discount</span>
                                 </a>
                             </li>

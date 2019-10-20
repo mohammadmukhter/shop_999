@@ -4,12 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\ProductModel;
-use App\VatModel;
+use App\DiscountModel;
 use Validator;
 use Toastr;
 use Redirect;
 
-class VatController extends Controller
+class DiscountController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,10 +19,8 @@ class VatController extends Controller
     public function index()
     {
         $product_data=ProductModel::all();
-
-        $vat_data=VatModel::join('product','vat.product_id','=','product.product_id')->orderBy('vat.created_at','desc')->get();
-        
-        return view('vat',['product_data'=>$product_data,'vat_data'=>$vat_data]);
+        $discount_data= DiscountModel::join('product','discount.product_id','=','product.product_id')->orderby('discount.created_at','desc')->get();
+        return view('/discount',['product_data'=>$product_data,'discount_data'=>$discount_data]);
     }
 
     /**
@@ -43,27 +41,27 @@ class VatController extends Controller
      */
     public function store(Request $request)
     {
-        $vat_insert= new VatModel;
-        $validate=Validator::make($request->all(),$vat_insert->Validation());
+        $data= new DiscountModel;
+        $validate=Validator::make($request->all(),$data->Validation());
         if($validate->fails())
         {
-            return back()->withErrors($validate);     
+            return back()->withErrors($validate);
         }
         else
         {
-            if($request->purchase_vat < 0)
+            if($request->purchase_discount < 0)
             {
                 Toastr::Error('Negative Number!!!','Error!',['positionClass'=>'toast-top-right']);
                 return back();
             }
 
-            if($request->sale_vat < 0)
+            if($request->sale_discount < 0)
             {
                 Toastr::Error('Negative Number!!!','Error!',['positionClass'=>'toast-top-right']);
                 return back();
             }
 
-            $inserted=$vat_insert->fill($request->all())->save();
+            $inserted=$data->fill($request->all())->save();
             if($inserted)
             {
                 Toastr::success('Data Inserted Successfully','Success!!',['positionClass'=>'toast-top-right']);
@@ -74,7 +72,6 @@ class VatController extends Controller
             }
             return back();
         }
-
     }
 
     /**
@@ -85,11 +82,11 @@ class VatController extends Controller
      */
     public function show($id)
     {
-        $status=VatModel::where('vat_id',$id)->first();
+        $status=DiscountModel::where('discount_id',$id)->first();
 
-        if($status->vat_status=='0')
+        if($status->discount_status=='0')
         {
-            $updated=$status->update(['vat_status'=>'1']);
+            $updated=$status->update(['discount_status'=>'1']);
             if($updated)
             {
                 Toastr::success('Status Changed Successfully','Success!!',['positionClass'=>'toast-top-right']);
@@ -101,7 +98,7 @@ class VatController extends Controller
         }
         else
         {
-            $updated=$status->update(['vat_status'=>'0']);
+            $updated=$status->update(['discount_status'=>'0']);
             if($updated)
             {
                 Toastr::success('Status Changed Successfully','Success!!',['positionClass'=>'toast-top-right']);
@@ -122,9 +119,8 @@ class VatController extends Controller
      */
     public function edit($id)
     {
-    
-        $edit_data=VatModel::join('product','vat.product_id','=','product.product_id')->where('vat_id',$id)->first();
-        return view('vat_edit',['edit_data'=>$edit_data]);
+        $edit_data=DiscountModel::join('product','discount.product_id','=','product.product_id')->where('discount_id',$id)->first();
+        return view('discount_edit',['edit_data'=>$edit_data]);
     }
 
     /**
@@ -136,7 +132,7 @@ class VatController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $update=VatModel::where('vat_id',$id)->first();
+        $update=DiscountModel::where('discount_id',$id)->first();
         $validate=Validator::make($request->all(),$update->Validation_edit());
         if($validate->fails())
         {
@@ -144,13 +140,13 @@ class VatController extends Controller
         }
         else
         {
-            if($request->purchase_vat < 0)
+            if($request->purchase_discount < 0)
             {
                 Toastr::Error('Negative Number!!!','Error!',['positionClass'=>'toast-top-right']);
                 return back();
             }
 
-            if($request->sale_vat < 0)
+            if($request->sale_discount < 0)
             {
                 Toastr::Error('Negative Number!!!','Error!',['positionClass'=>'toast-top-right']);
                 return back();
@@ -165,7 +161,7 @@ class VatController extends Controller
             {
                 Toastr::error('Something Went Wrong','Error!!',['positionClass'=>'toast-top-right']);
             }
-            return redirect::to('/vat');
+            return redirect::to('/discount');
         }
     }
 
@@ -177,7 +173,7 @@ class VatController extends Controller
      */
     public function destroy($id)
     {
-        $data=VatModel::where('vat_id',$id)->first();
+        $data=DiscountModel::where('discount_id',$id)->first();
         $deleted=$data->delete();
         if($deleted)
         {

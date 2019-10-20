@@ -29,6 +29,8 @@
         </div>
     </div>
 
+<div style="font-weight: bold; font-size: 25px; color: #B6B0AF;"> UNIT LIST </div>
+
 <div style="text-align: right; margin-bottom: 10px;">
 	<button type="button" class="btn btn-success waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal"> Add + </button>
 </div>

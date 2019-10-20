@@ -39,3 +39,5 @@ Route::resource('/purchase_list','PurchaseController');
 Route::get('/purchase_create','PurchaseController@pur_create');
 
 Route::resource('/vat','VatController');
+
+Route::resource('/discount','DiscountController');

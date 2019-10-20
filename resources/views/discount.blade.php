@@ -28,60 +28,58 @@
             </div>
         </div>
     </div>
-
-<div style="font-weight: bold; font-size: 25px; color: #B6B0AF;"> VAT LIST </div>
-
+<div style="font-weight: bold; font-size: 25px; color: #B6B0AF;"> DISCOUNT LIST </div>
 <div style="text-align: right; margin-bottom: 10px;">
 	<button type="button" class="btn btn-success waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal"> Add + </button>
 </div>
 
 
- <table id="vat_table" class="table table-bordered" style="width:100%;">
+ <table id="discount_table" class="table table-bordered" style="width:100%;">
         <thead style="background: #6686FC;">
             <tr>
             	<th>Sl</th>
             	<th>Product</th>
-                <th>Purchase Vat (%)</th>
-                <th>Sale Vat (%)</th>
+                <th>Purchase Discount (%)</th>
+                <th>Sale Discount (%)</th>
                 <th>Status</th>
                 <th>Action</th>
             </tr>
         </thead>
         <tbody>
-        	@foreach($vat_data as $key=> $vat_data)
+            @foreach($discount_data as $key=> $discount_data)
         	<tr>
-        		<td>{{$key+1}}</td>
-        		<td>{{$vat_data->product_name}}</td>
-        		<td>{{$vat_data->purchase_vat}}<span style="font-weight: bold; margin-left: 3px;">%</span></td>
-        		<td>{{$vat_data->sale_vat}}<span style="font-weight: bold; margin-left: 3px;">%</span></td>
-        		@if($vat_data->vat_status=='0')
-        		<td><span class="text-danger" style="font-weight: bold;">{{'Inactive'}}</span></td>
-        		@else
-        		<td><span class="text-success" style="font-weight: bold;">{{'Active'}}</span></td>
-        		@endif
-        		<td style="display: inline-flex;">
+             <td>{{$key+1}}</td>   
+             <td>{{$discount_data->product_name}}</td> 
+             <td>{{$discount_data->purchase_discount}}</td> 
+             <td>{{$discount_data->sale_discount}}</td> 
+             @if($discount_data->discount_status=='0')
+             <td><span class="text-danger" style="font-weight: bold;">{{'Inactive'}}</span></td> 
+             @else
+             <td><span class="text-success" style="font-weight: bold;">{{'Active'}}</span></td>
+             @endif
+             <td style="display: inline-flex;">
 
-        			{{Form::open(['url'=>'/vat/'.$vat_data->vat_id.'/edit','method'=>'get'])}}
-        			{{Form::submit('Edit',['class'=>'btn btn-info m-r-5'])}}
-        			{{Form::close()}}
+                    {{Form::open(['url'=>'/discount/'.$discount_data->discount_id.'/edit','method'=>'get'])}}
+                    {{Form::submit('Edit',['class'=>'btn btn-info m-r-5'])}}
+                    {{Form::close()}}
 
-                    {{Form::open(['url'=>'/vat/'.$vat_data->vat_id,'method'=>'delete'])}}
+                    {{Form::open(['url'=>'/discount/'.$discount_data->discount_id,'method'=>'delete'])}}
                     {{Form::submit('Delete',['class'=>'btn btn-warning m-r-5','onclick'=>"return confirm('Are you sure?')"])}}
                     {{Form::close()}}
 
-                    @if($vat_data->vat_status=='0')
-                        {{Form::open(['url'=>'/vat/'.$vat_data->vat_id,'method'=>'get'])}}
+                    @if($discount_data->discount_status=='0')
+                        {{Form::open(['url'=>'/discount/'.$discount_data->discount_id,'method'=>'get'])}}
                         {{Form::submit('Active',['class'=>'btn btn-success m-r-5'])}}
                         {{Form::close()}}
                     @else
-                        {{Form::open(['url'=>'/vat/'.$vat_data->vat_id,'method'=>'get'])}}
+                        {{Form::open(['url'=>'/discount/'.$discount_data->discount_id,'method'=>'get'])}}
                         {{Form::submit('Inactive',['class'=>'btn btn-danger m-r-5'])}}
                         {{Form::close()}}
                     @endif
 
-        		</td>
-        	</tr>
-        	@endforeach
+                </td>
+            </tr>
+            @endforeach
         </tbody>
  
     </table>
@@ -90,45 +88,45 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title" id="defaultModalLabel"> Add Vat  </h4>
+                            <h4 class="modal-title" id="defaultModalLabel"> Add Discount </h4>
                         </div>
                         <div class="modal-body">
 
                         <div class="body">
 
 
-			                 {{Form::open(['url'=>'/vat','method'=>'post'])}}
+			                 {{Form::open(['url'=>'/discount','method'=>'post'])}}
 
 			                 {{Form::label('Product')}}
 			                   	<div class="form-group">
                                     <div class="form-line">
                           				<select name="product_id" class="form-control">
                           					<option disabled selected value> -- select Product -- </option>
-                          					@foreach($product_data as $product_data)
-                          					<option value="{{$product_data->product_id}}">{{$product_data->product_name}}</option>
-                          					@endforeach
+                                            @foreach($product_data as $product_data)
+                                                <option value="{{$product_data->product_id}}">{{$product_data->product_name}}</option>
+                                            @endforeach
                           				</select>
 									</div>
                                 </div>
 
-			                 {{Form::label('Purchase Vat (%)')}}
+			                 {{Form::label('Purchase discount (%)')}}
 			                   	<div class="form-group">
                                     <div class="form-line">
-                          				{{Form::text('purchase_vat','',['class'=>'form-control'])}}
+                          				{{Form::text('purchase_discount','',['class'=>'form-control'])}}
 									</div>
                                 </div>
 
-                            {{Form::label('Sale Vat (%)')}}
+                            {{Form::label('Sale discount (%)')}}
 			                   	<div class="form-group">
                                     <div class="form-line">
-                          				{{Form::text('sale_vat','',['class'=>'form-control'])}}
+                          				{{Form::text('sale_discount','',['class'=>'form-control'])}}
 									</div>
                                 </div>
 
                             {{Form::label('Status')}}
                                 <div class="form-group">
                                     <div class="form-line">
-                                    	{{Form::select("vat_status",['1' => 'Active', '0' => 'Inactive'], null,["class" => "form-control"])}}
+                                    	{{Form::select("discount_status",['1' => 'Active', '0' => 'Inactive'], null,["class" => "form-control"])}}
                                     </div>
                                 </div>
 
@@ -152,7 +150,7 @@
 
 <script type="text/javascript">
 $(document).ready(function(){
-	$('#vat_table').DataTable();
+	$('#discount_table').DataTable();
 });
 	
 </script>
