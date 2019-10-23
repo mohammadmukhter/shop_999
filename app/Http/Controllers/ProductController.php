@@ -7,6 +7,7 @@ use App\CategoryModel;
 use App\SubCategoryModel;
 use App\UnitModel;
 use App\ProductModel;
+use App\PriceVariationModel;
 use Validator;
 use Toastr;
 use Arr;
@@ -106,6 +107,7 @@ class ProductController extends Controller
      */
     public function show($id)
     {
+
         $status=ProductModel::where('product_id',$id)->first();
         if($status->product_status=='0')
         {
@@ -158,6 +160,7 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         $update= ProductModel::where('product_id',$id)->first();
+        $price_variation_data= new PriceVariationModel;
 
         $validate=Validator::make($request->all(),$update->Validation());
         if($validate->fails())
@@ -181,11 +184,35 @@ class ProductController extends Controller
                     $request->file('image')->move("image_upload", $name);
                 }
 
-                $image_path= 'image_upload/'.$update->image;
-                if(File::exists($image_path))
+                if($request->purchase_price != $update->purchase_price )
                 {
-                    File::delete($image_path);
+                    $update->update(['last_purchase_price'=>$update->purchase_price]);
                 }
+
+                if($request->sale_price != $update->sale_price)
+                {
+                    $update->update(['last_sale_price'=>$update->sale_price]);
+                    
+                }
+                if($request->purchase_price != $update->purchase_price || $request->sale_price != $update->sale_price )
+                {
+                    $price_variation_data->insert([
+                        'product_id'=>$update->product_id,
+                        'last_purchase_price'=>$update->purchase_price,
+                        'last_sale_price'=>$update->sale_price,
+                        'created_at'=> \Carbon\Carbon::now(),
+                    ]);
+                }
+
+                if($request->iamge)
+                {
+                    $image_path= 'image_upload/'.$update->image;
+                    if(File::exists($image_path))
+                    {
+                        File::delete($image_path);
+                    }
+                }
+                    
                 
                 $updated=$update->fill($requested_data)->save();
 

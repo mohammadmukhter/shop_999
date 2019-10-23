@@ -37,6 +37,7 @@ Route::post('/customer_ajax_data','CustomerController@ajax_data');
 
 Route::resource('/purchase_list','PurchaseController');
 Route::get('/purchase_create','PurchaseController@pur_create');
+Route::post('/purchase_ajax_data','PurchaseController@ajax_data');
 
 Route::resource('/vat','VatController');
 
