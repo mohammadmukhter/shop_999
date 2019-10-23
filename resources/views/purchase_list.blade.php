@@ -42,7 +42,7 @@
                                             <th> Voucher No </th>
                                             <th> Supplier </th>
                                             <th> Net Total </th>
-                                            <th> Paid Total </th>
+                                            <th> Status </th>
                                             <th> Action </th>
                                         </tr>
                                     </thead>
@@ -54,7 +54,7 @@
                                     		<td>6188888888</td>
                                     		<td>Mr. kY</td>
                                     		<td>4000</td>
-                                    		<td>2000</td>
+                                    		<td> <span class="text-success" style="font-weight: bold;"><i class="fa fa-check-circle" aria-hidden="true"></i>&nbsp; Paid </span> </td>
                                     		<td><button>Details</button></td>
                                     	</tr>
                                     </tbody>

@@ -1,6 +1,6 @@
 </section>
 
-    <!-- Jquery Core Js -->
+   <!-- Jquery Core Js -->
     <script src="{{asset('backend_asset/plugins/jquery/jquery.min.js')}}"></script>
 
     <!-- Bootstrap Core Js -->

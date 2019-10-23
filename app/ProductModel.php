@@ -8,7 +8,7 @@ class ProductModel extends Model
 {
     protected $table='product';
     protected $primaryKey='product_id';
-    protected $fillable=['product_name','product_code','category_id','sub_category_id','purchase_price','sale_price','unit_id','production_date','expired_date','image','product_status'];
+    protected $fillable=['product_name','product_code','category_id','sub_category_id','purchase_price','last_purchase_price','sale_price','last_sale_price','unit_id','production_date','expired_date','image','product_status'];
 
     public function Validation()
     {
