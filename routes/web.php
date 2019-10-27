@@ -22,7 +22,6 @@ Route::resource('/category','CategoryController');
 Route::resource('/sub_category','SubCategoryController');
 Route::post('/sub_category_ajax','SubCategoryController@ajax_data');
 
-
 Route::resource('/product','ProductController');
 Route::post('/sub_category_ajax','ProductController@ajax_data');
 
