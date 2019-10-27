@@ -1,6 +1,21 @@
 @extends('backend.backend')
 @section('main_section')
 
+
+@include('backend.layouts.toastr')
+{!! Toastr::message() !!}
+
+@if($errors->any())
+<div class="alert alert-danger">
+<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+	<ul>
+		@foreach($errors->all() as $errors)
+		<li>{{$errors}}</li>
+		@endforeach		
+	</ul>
+</div>
+@endif
+{{Form::open(['url'=>'/purchase_list','method'=>'post'])}}
 <div class="row clearfix">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div style="background: #FB837D;">
@@ -20,10 +35,10 @@
 <div class="panel" style="margin-bottom: 100px;">
 	<div class="panel-body">
 		<h3 class="title-hero"> Create New Purchase </h3>
-{{Form::open(['url'=>'#'])}}
+
 
 		<div style="margin-top: 20px;">
-			<div class="co l-md-3" style="text-align: right; font-size: 20px;">
+			<div class="col-md-3" style="text-align: right; font-size: 20px;">
 				<label  class="control-label"> Supplier Name:</label>
 				
 			</div>
@@ -64,35 +79,36 @@
 				<tbody class="input_fields_wrap">
 					<tr>
 						<td>
-							<select style="width: 145px;" name="product_id" class="form-control product_button">
+							<select style="width: 145px;" name="product_id[]" class="form-control product_button">
 								<option disabled selected value>--Select Product--</option>
 								@foreach($product_data as $product_data_value)
 								<option value="{{$product_data_value->product_id}}">{{$product_data_value->product_name}}</option>
 								@endforeach
 							</select>
+							<input hidden type="text" name="product_code[]" class="product_code">
 						</td>
 						<td>
-							<input type="text" readonly="readonly" name="purchase_unit_price" class="form-control text-center purchase_unit_price">
+							<input type="text" readonly="readonly" name="purchase_unit_price[]" class="form-control text-center purchase_unit_price">
 						</td>
 						<td>
-							<input type="number" min=0 name="purchase_quantity" class="form-control text-center purchase_quantity">
+							<input type="number" min="0" name="purchase_quantity[]" class="form-control text-center purchase_quantity">
 						</td>
 						<td>
-							<input type="date" style="width: 145px;" name="production_date" class="form-control text-center">
+							<input type="date" style="width: 145px;" name="production_date[]" class="form-control text-center">
 						</td>
 						<td>
-							<input type="date" style="width: 145px;" name="expired_date" class="form-control text-center">
+							<input type="date" style="width: 145px;" name="expired_date[]" class="form-control text-center">
 						</td>
 						<td>
-							<input type="text" readonly style="width: 50px;" name="purchase_vat" class="form-control text-center purchase_vat">
-							<input hidden type="text" name="vat_hidden" class="vat_hidden">
+							<input type="text" readonly style="width: 50px;" name="purchase_vat[]" class="form-control text-center purchase_vat">
+							<input hidden type="text" name="vat_hidden[]" class="vat_hidden">
 						</td>
 						<td>
-							<input type="text" readonly style="width: 50px;" name="purchase_discount" class="form-control text-center purchase_discount">
-							<input hidden type="text" name="discount_hidden" class="discount_hidden">
+							<input type="text" readonly style="width: 50px;" name="purchase_discount[]" class="form-control text-center purchase_discount">
+							<input hidden type="text" name="discount_hidden[]" class="discount_hidden">
 						</td>
 						<td>
-							<input type="text" readonly name="purchase_sub_total" class="form-control text-center purchase_sub_total">
+							<input type="text" readonly name="purchase_sub_total[]" class="form-control text-center purchase_sub_total">
 						</td>
 						<td>
 							<button type="button" class="btn btn-success add_field_button">
@@ -182,7 +198,7 @@
 			</table>
 		</div>
 
-{{Form::close()}}
+
 	</div>
 
 <script type="text/javascript">
@@ -202,35 +218,36 @@ $(document).ready(function() {
             x++; 
             $(wrapper).append('<tr>\
 					<td>\
-							<select style="width: 145px;" name="product_id" class="form-control product_button">\
+							<select style="width: 145px;" name="product_id[]" class="form-control product_button">\
 								<option disabled selected value>--Select Product--</option>\
 								@foreach($product_data as $product_data_value)\
 									<option value="{{$product_data_value->product_id}}">{{$product_data_value->product_name}}</option>\
 								@endforeach\
                             </select>\
+                            <input hidden type="text" name="product_code[]" class="product_code">\
 						</td>\
 						<td>\
-							<input type="text" readonly name="purchase_unit_price" class="form-control text-center purchase_unit_price">\
+							<input type="text" readonly name="purchase_unit_price[]" class="form-control text-center purchase_unit_price">\
 						</td>\
 						<td>\
-							<input type="number" min=0 name="purchase_quantity" class="form-control text-center purchase_quantity">\
+							<input type="number" min=0 name="purchase_quantity[]" class="form-control text-center purchase_quantity">\
 						</td>\
 						<td>\
-							<input type="date" style="width: 145px;" name="production_date" class="form-control text-center">\
+							<input type="date" style="width: 145px;" name="production_date[]" class="form-control text-center">\
 						</td>\
 						<td>\
-							<input type="date" style="width: 145px;" name="expired_date" class="form-control text-center">\
+							<input type="date" style="width: 145px;" name="expired_date[]" class="form-control text-center">\
 						</td>\
 						<td>\
-							<input type="text" readonly style="width: 50px;" name="purchase_vat" class="form-control text-center purchase_vat">\
-							<input hidden type="text" name="vat_hidden" class="vat_hidden">\
+							<input type="text" readonly style="width: 50px;" name="purchase_vat[]" class="form-control text-center purchase_vat">\
+							<input hidden type="text" name="vat_hidden[]" class="vat_hidden">\
 						</td>\
 						<td>\
-							<input type="text" readonly style="width: 50px;" name="purchase_discount" class="form-control text-center purchase_discount">\
-							<input hidden type="text" name="discount_hidden" class="discount_hidden">\
+							<input type="text" readonly style="width: 50px;" name="purchase_discount[]" class="form-control text-center purchase_discount">\
+							<input hidden type="text" name="discount_hidden[]" class="discount_hidden">\
 						</td>\
 						<td>\
-							<input type="text" readonly name="purchase_sub_total" class="form-control text-center purchase_sub_total">\
+							<input type="text" readonly name="purchase_sub_total[]" class="form-control text-center purchase_sub_total">\
 						</td>\
 						<td>\
 							<button type="button" class="btn btn-danger remove_field">\
@@ -283,7 +300,7 @@ $(document).ready(function() {
 			var t_vat= parseFloat($('.total_purchase_vat').val()); 
 			var t_discount= parseFloat($('.total_purchase_discount').val());
 			var net_price= t_price-t_discount+t_vat;
-			console.log(net_price);
+			
 			$('.purchase_net_price').val(net_price);
 
 
@@ -371,7 +388,7 @@ $(document).ready(function() {
 
 
 	$(document).on('change','.product_button',function(){
-		var data_id=$(this).closest("tr").find("select[name=product_id]").val();
+		var data_id=$(this).closest("tr").find(".product_button").val();
 		var first=$(this).closest('tr');
 				
 		$.ajax({
@@ -383,8 +400,8 @@ $(document).ready(function() {
 			},
 			success:function(data)
 			{
-				console.log(data);
-
+				//console.log(data);
+				first.find('.product_code').val(data.product_array.product_code);
 				first.find(".purchase_unit_price").val(data.product_array.purchase_price);
 				first.find('.purchase_quantity').val('1');
 
@@ -470,6 +487,7 @@ $(document).ready(function() {
 					var pur_net= parseFloat($('.purchase_net_price').val());
 					var pur_paid= parseFloat($('.purchase_paid').val());
 					var pur_due= pur_net - pur_paid;
+
 					
 					if(pur_due>0)
 					{
@@ -482,6 +500,7 @@ $(document).ready(function() {
 						$('.purchase_due').val(0);
 
 					}
+
 					
 
 					if(!pur_paid || pur_paid=='0')
@@ -638,12 +657,12 @@ $(document).ready(function() {
 			$('.change_tr').show();
 		}
 		
+		
 
 	});
-
 
 });
 
 </script>
-
+{{Form::close()}}
 @endsection

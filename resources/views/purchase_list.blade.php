@@ -1,5 +1,11 @@
 @extends('backend.backend')
 @section('main_section')
+
+
+
+@include('backend.layouts.toastr')
+{!! Toastr::message() !!}
+
 		
 	 <div class="row clearfix">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -42,21 +48,34 @@
                                             <th> Voucher No </th>
                                             <th> Supplier </th>
                                             <th> Net Total </th>
-                                            <th> Status </th>
+                                            <th> Transaction Status </th>
                                             <th> Action </th>
                                         </tr>
                                     </thead>
                                     
                                     <tbody>
-                                    	<tr>
-                                    		<td>01</td>
-                                    		<td>12/12/2019</td>	
-                                    		<td>6188888888</td>
-                                    		<td>Mr. kY</td>
-                                    		<td>4000</td>
-                                    		<td> <span class="text-success" style="font-weight: bold;"><i class="fa fa-check-circle" aria-hidden="true"></i>&nbsp; Paid </span> </td>
-                                    		<td><button>Details</button></td>
-                                    	</tr>
+                                        @foreach($purchase_transaction_data as $key => $p_t_data)
+                                            <tr>
+                                                <td>{{$key+1}}</td>
+                                                <td>{{$p_t_data->created_at->format('m/d/Y')}}</td>
+                                                <td>{{$p_t_data->purchase_voucher_code}}
+                                                <input type="text" hidden class="purchase_voucher_code" value="{{$p_t_data->purchase_voucher_code}}">
+                                                </td>
+                                                <td>{{$p_t_data->supplier_name}}</td>
+                                                <td>{{$p_t_data->purchase_net_price}}</td>
+                                                @if($p_t_data->purchase_transaction_status==1)
+                                                <td><span class="text-success" style="font-weight: bold;"><i class="fa fa-check-circle"></i>&nbsp;Paid</span></td>
+                                                @else
+                                                <td><span class="text-danger" style="font-weight: bold;"><i class="fa fa-exclamation-circle"></i>&nbsp;Due</span></td>
+                                                @endif
+                                                
+                                                <td>
+                                                    {{Form::open(['class'=>'url_class','url'=>'','method'=>'get'])}}
+                                                    {{Form::submit('Details',['class'=>'btn btn-info purchase_transaction_details'])}}
+                                                    {{Form::close()}}
+                                                </td>
+                                            </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -64,5 +83,15 @@
                     </div>
                 </div>
             </div>
+
+
+
+<script type="text/javascript">
+    $(document).on('click','.purchase_transaction_details',function(){
+        var purchase_voucher= $(this).closest('tr').find('.purchase_voucher_code').val();
+        var url= '/purchase_list/'+purchase_voucher;
+        $('.url_class').attr('action',url);
+    });
+</script>
 
 @endsection
