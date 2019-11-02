@@ -36,8 +36,16 @@ Route::post('/customer_ajax_data','CustomerController@ajax_data');
 
 Route::resource('/purchase_list','PurchaseController');
 Route::get('/purchase_create','PurchaseController@pur_create');
+Route::get('/purchase_transaction','PurchaseController@pur_transaction');
 Route::post('/purchase_ajax_data','PurchaseController@ajax_data');
+Route::get('/p_voucher/{voucher_code}','PurchaseController@p_voucher');
+
+Route::resource('/sale_list','SaleController');
+Route::get('/sale_create','SaleController@sale_create');
+Route::get('/sale_transaction','SaleController@sale_transaction');
+Route::post('/sale_ajax_data','SaleController@ajax_data');
 
 Route::resource('/vat','VatController');
 
 Route::resource('/discount','DiscountController');
+

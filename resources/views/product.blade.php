@@ -41,7 +41,7 @@
                 </div>
 
                 <h2>
-                   Sub Category
+                   Products List
                 </h2> 
             </div>
             <div class="body">

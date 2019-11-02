@@ -1,4 +1,4 @@
 @extends('backend.backend')
 @section('main_section')
-	<h1>Ok</h1>
+	<h1>Okok</h1>
 @endsection

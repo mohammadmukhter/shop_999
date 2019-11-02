@@ -32,11 +32,16 @@ class PurchaseController extends Controller
             return view('purchase_create',['supplier_data'=>$supplier_data,'product_data'=>$product_data,'purchase_voucher_code'=>$purchase_voucher_code]);
         }
 
+        public function pur_transaction()
+        {
+            $purchase_transaction_data=PurchaseTransactionModel::join('supplier','purchase_transaction.supplier_id','=','supplier.supplier_id')->select('supplier.supplier_name','purchase_transaction.*')->orderby('created_at','desc')->get();
+                return view('purchase_transaction',['purchase_transaction_data'=>$purchase_transaction_data]);
+        }
+
 
     public function index()
     {
-        $purchase_transaction_data=PurchaseTransactionModel::join('supplier','purchase_transaction.supplier_id','=','supplier.supplier_id')->select('supplier.supplier_name','purchase_transaction.*')->orderby('created_at','desc')->get();
-        return view('purchase_list',['purchase_transaction_data'=>$purchase_transaction_data]);
+        return view('purchase_list');
     }
 
     /**
@@ -197,7 +202,7 @@ class PurchaseController extends Controller
                 }
 
         }
-        return Redirect::to('/purchase_list');
+        return Redirect::to('/purchase_transaction');
     }
 
     /**
@@ -223,7 +228,7 @@ class PurchaseController extends Controller
      */
     public function edit($id)
     {
-        //
+        
     }
 
     /**
@@ -266,6 +271,15 @@ class PurchaseController extends Controller
         }
 
         return $data;
+    }
+
+    public function p_voucher($voucher_code)
+    {
+
+        $purchase_data=PurchaseModel::join('product','purchase.product_id','=','product.product_id')->where('purchase.purchase_voucher_code',$voucher_code)->select('product.*','purchase.*')->get();
+        $purchase_transaction_data= PurchaseTransactionModel::join('supplier','purchase_transaction.supplier_id','=','supplier.supplier_id')->where('purchase_transaction.purchase_voucher_code',$voucher_code)->select('purchase_transaction.*','supplier.supplier_name','supplier.company_name')->firstOrfail();
+
+        return view('purchase_voucher',['purchase_data'=>$purchase_data,'voucher_code'=>$voucher_code,'purchase_transaction_data'=>$purchase_transaction_data]);
     }
 
 }

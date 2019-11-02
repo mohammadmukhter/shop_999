@@ -443,7 +443,8 @@ $(document).ready(function() {
 					  if(!isNaN(this.value) && this.value.length!=0) 
 					  {
 					    sum_v += parseFloat(this.value);       
-					  }  
+					  }
+					    
 					});
 					$('.total_purchase_vat').val(sum_v);
 
@@ -453,11 +454,11 @@ $(document).ready(function() {
 				first.find('.discount_hidden').val(pur_discount_cal);
 					var sum_d = 0; 
 					$(".discount_hidden").each(function() 
-					{ 
+					{
 
 					  if(!isNaN(this.value) && this.value.length!=0) 
 					  {
-					    sum_d += parseFloat(this.value);       
+					    sum_d += parseFloat(this.value);
 					  }  
 					});
 					$('.total_purchase_discount').val(sum_d);

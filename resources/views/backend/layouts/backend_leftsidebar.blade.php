@@ -80,15 +80,22 @@
                             <span style="font-weight: bold;">Purchase</span>
                         </a>
                         <ul class="ml-menu">
+
                             <li>
                                 <a href="/purchase_list">
-                                    <span style="font-weight: bold;"> Purchase </span>
+                                    <span style="font-weight: bold;"> Purchase List</span>
                                 </a>
                             </li>
 
                             <li>
-                                <a href="#">
-                                    <span>Stock</span>
+                                <a href="/purchase_transaction">
+                                    <span style="font-weight: bold;"> Purchase Transaction</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="/purchase_create">
+                                    <span style="font-weight: bold;">Purchase Create</span>
                                 </a>
                             </li>
                         </ul>
@@ -99,11 +106,25 @@
                             <span style="font-weight: bold;">Sales</span>
                         </a>
                         <ul class="ml-menu">
+
                             <li>
-                                <a href="#"> 
-                                    <span style="font-weight: bold;"> Sales </span>
+                                <a href="/sale_list"> 
+                                    <span style="font-weight: bold;"> Sale List </span>
                                 </a>
                             </li>
+                            
+                            <li>
+                                <a href="/sale_transaction"> 
+                                    <span style="font-weight: bold;"> Sale Transaction </span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="/sale_create"> 
+                                    <span style="font-weight: bold;"> POS </span>
+                                </a>
+                            </li>
+
                         </ul>
                     </li>
 

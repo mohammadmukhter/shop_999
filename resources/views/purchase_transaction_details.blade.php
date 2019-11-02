@@ -2,6 +2,7 @@
 @section('main_section')
 
 <div style="background: black; color: white; padding: 10px 5px; font-weight: bold; text-align: center; font-size: 20px; padding-left: 180px;">
+
 	Purchase Transaction Details
 	<p style="font-size: 15px; float: right; margin-top: 10px;"> VOUCHER&nbsp;: <span style="color: red; margin-right: 15px; text-shadow: 1px 1px 2px #CC6A6A;">	&nbsp;{{$id}}</span> </p>
 </div>
@@ -153,7 +154,7 @@
 								</thead>
 
 								<tbody>
-									@if($p_data->purchase_vat)
+									
 									@foreach($purchase_data as $v_data)
 										@if($v_data->purchase_vat != 0)
 										<tr>
@@ -163,11 +164,13 @@
 										</tr>
 										@endif
 									@endforeach
-									@else
+
+									@if($purchase_transaction_data->total_purchase_vat==0)
 									<tr>
 										<td colspan="3"> No Data Found </td>
 									</tr>
 									@endif
+									
 								</tbody>
 							</table>
 				</div>
@@ -186,7 +189,7 @@
 								</thead>
 
 								<tbody>
-									@if($p_data->purchase_discount)
+									
 									@foreach($purchase_data as $d_data)
 										@if($d_data->purchase_discount != 0)
 										<tr>
@@ -196,19 +199,28 @@
 										</tr>
 										@endif
 									@endforeach
-									@else
+
+									@if($purchase_transaction_data->total_purchase_discount==0)
 									<tr>
 										<td colspan="3"> No Data Found </td>
 									</tr>
 									@endif
+
 								</tbody>
 							</table>
 				</div>
 			</div>
 		</div>
-		
+		<div class="col-md-12" style="text-align: center; margin-top: 20px;">
+			{{Form::open(['url'=>'/purchase_transaction','method'=>'get'])}}
+			<i style="color: red; font-size: 15px;" class="fa fa-caret-left"></i>&nbsp;
+			{{Form::submit('Back',['class'=>'btn btn-danger'])}}
+			{{Form::close()}}
+			
+		</div>
 	</div>
 	
 </div>
+
 
 @endsection

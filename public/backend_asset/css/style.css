@@ -1,4 +1,13 @@
 ﻿/* Navbar ====================================== */
+
+.td_border{
+
+  border-left: 1px solid #eee;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+  border-right: 1px solid #eee;
+}
+
 @import url(materialize.css);
 .navbar {
   font-family: "Roboto", sans-serif;
@@ -4589,6 +4598,8 @@ section.content {
   padding: 10px;
   border-top: 1px solid #eee;
   border-bottom: 1px solid #eee; }
+
+  
 
 .table tbody tr.primary td, .table tbody tr.primary th {
   background-color: #1f91f3;
