@@ -295,6 +295,15 @@
 							
 					  })
 					  $('.sale_total_price').val(sum_total);
+
+					  sum_d=0;
+					  $('.sale_discount_amount').each(function(){
+					  		if(!isNaN(this.value) && this.value.length!=0)
+					  		{
+					  			sum_d += parseFloat(this.value);
+					  		}
+					  })
+					  $('.total_sale_discount').val(sum_d);
 			}
 		});
 
@@ -317,7 +326,18 @@
 							
 					  })
 					  $('.sale_total_price').val(sum_total);
-					  console.log(sum_total);	
+					  
+
+					  sum_d=0;
+					  $('.sale_discount_amount').each(function(){
+					  		if(!isNaN(this.value) && this.value.length!=0)
+					  		{
+					  			sum_d += parseFloat(this.value);
+					  		}
+					  })
+					  $('.total_sale_discount').val(sum_d);
+
+					  	
     });
 
 
