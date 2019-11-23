@@ -483,8 +483,6 @@ $(document).ready(function() {
 				$('.purchase_net_price').val(net_price);
 
 
-
-
 					var pur_net= parseFloat($('.purchase_net_price').val());
 					var pur_paid= parseFloat($('.purchase_paid').val());
 					var pur_due= pur_net - pur_paid;

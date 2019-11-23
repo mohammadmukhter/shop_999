@@ -33,8 +33,8 @@
                         	{{Form::close()}}
                         	</div>
 
-                            <h2>
-                                Purchase List
+                            <h2 style="color: #000; font-size: 25px; font-weight: bold; text-shadow: 2px 2px 2px #CE5937;">
+                                PURCHASE TRANSACTION
                             </h2>
                             
                         </div>
@@ -70,7 +70,7 @@
                                                 @endif
                                                 
                                                 <td style="display: inline-flex;">
-                                                    {{Form::open(['class'=>'url_class','url'=>'','method'=>'get'])}}
+                                                    {{Form::open(['url'=>'/purchase_list/'.$p_t_data->purchase_voucher_code,'method'=>'get'])}}
                                                     {{Form::submit('Details',['class'=>'btn btn-info purchase_transaction_details','style'=>'margin-right:5px;'])}}
                                                     {{Form::close()}}
 
@@ -89,13 +89,7 @@
             </div>
 
 
-
 <script type="text/javascript">
-    $(document).on('click','.purchase_transaction_details',function(){
-        var purchase_voucher= $(this).closest('tr').find('.purchase_voucher_code').val();
-        var url= '/purchase_list/'+purchase_voucher;
-        $('.url_class').attr('action',url);
-    });
 
 
     $('.bill_popup').click(function(e){

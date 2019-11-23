@@ -89,7 +89,13 @@
 								<tr style="padding: 10px 0px;">
 									<td  style="font-weight: bold; color: black;"> Due </td>
 									<td  style="font-weight: bold; color: black;">:</td>
-									<td style="padding-left: 15px;">{{$purchase_transaction_data->purchase_due}}</td>
+									@if($purchase_transaction_data->purchase_due != 0)
+									<td style="padding-left: 15px;">
+										<span style="font-weight: bold; color: red;">{{$purchase_transaction_data->purchase_due}}</span></td>
+									@else
+									<td style="padding-left: 15px;">
+										<span style="font-weight: bold; color: green;">{{$purchase_transaction_data->purchase_due}}</span></td>
+									@endif
 								</tr>
 								<tr style="padding: 10px 0px;">
 									<td  style="font-weight: bold; color: black;"> Change </td>
