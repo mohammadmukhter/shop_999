@@ -30,8 +30,8 @@
                         	{{Form::close()}}
                         	</div>
 
-                            <h2>
-                                Sale List
+                            <h2 style="color: #000; font-size: 25px; font-weight: bold; text-shadow: 2px 2px 2px #CE5937;">
+                                SALES TRANSACTION
                             </h2>
                             
                         </div>
@@ -45,21 +45,40 @@
                                             <th> Invoice No </th>
                                             <th> Customer </th>
                                             <th> Net Total </th>
+                                            <th> Paid </th>
                                             <th> Transaction Status </th>
                                             <th> Action </th>
                                         </tr>
                                     </thead>
                                     
                                     <tbody>
-                                       <tr>
-                                       	<td> 01 </td>
-                                       	<td> Apple </td>
-                                       	<td> 5416541451 </td>
-                                       	<td> MR Dso </td>
-                                       	<td> 240 </td>
-                                       	<td> Paid </td>
-                                       	<td> <button>details</button> </td>
-                                       </tr>
+                                        @foreach($sale_transaction as $key=> $sale_transaction)
+                                        <tr>
+                                            <td>{{$key+1}}</td>
+                                            <td>{{$sale_transaction->created_at->format('m/d/Y')}}</td>
+                                            <td>{{$sale_transaction->sale_invoice_code}}
+                                                <input type="hidden" name="sale_invoice_code" class="sale_invoice_code" value="{{$sale_transaction->sale_invoice_code}}">
+                                            </td>
+                                            <td>{{$sale_transaction->customer_name}}</td>
+                                            <td>{{$sale_transaction->sale_net_total}}</td>
+                                            <td>{{$sale_transaction->sale_paid}}</td>
+                                            @if($sale_transaction->sale_transaction_status == 0)
+                                            <td> <span style="color: red; font-weight: bold;"> Due </span> </td>
+                                            @else
+                                            <td> <span style="color: green; font-weight: bold;"> Paid </span> </td>
+                                            @endif
+
+                                            <td style="display: inline-flex;">
+                                                {{Form::open(['url'=>'/sale_list/'.$sale_transaction->sale_invoice_code,'method'=>'get'])}}
+                                                {{Form::submit('Details',['class'=>'btn btn-info sale_details'])}}
+                                                {{Form::close()}}
+
+                                                {{Form::open(['url'=>"/sale_invoice/".$sale_transaction->sale_invoice_code,'method'=>'get'])}}
+                                                    {{Form::submit('Invoice',['class'=>'btn btn-warning invoice_popup'])}}
+                                                    {{Form::close()}}
+                                            </td>
+                                        </tr>
+                                       @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -68,4 +87,15 @@
                 </div>
             </div>
 
+
+    <script type="text/javascript">
+        
+        $('.invoice_popup').click(function(e){
+        e.preventDefault();
+        var s_data= $(this).closest('tr').find('.sale_invoice_code').val();
+        var s_url= '/sale_invoice/'+s_data;
+        window.open(s_url, 'mywindow', 'width=1120, height=1200');
+        });
+
+    </script>
 @endsection

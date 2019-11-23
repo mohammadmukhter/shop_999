@@ -44,8 +44,12 @@ Route::resource('/sale_list','SaleController');
 Route::get('/sale_create','SaleController@sale_create');
 Route::get('/sale_transaction','SaleController@sale_transaction');
 Route::post('/sale_ajax_data','SaleController@ajax_data');
+Route::get('/sale_invoice/{sale_invoice_code}','SaleController@s_invoice');
 
 Route::resource('/vat','VatController');
 
 Route::resource('/discount','DiscountController');
+
+Route::get('/stock_report','StockReportController@index');
+Route::post('/stock_show','StockReportController@show');
 
